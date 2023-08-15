@@ -8,10 +8,16 @@ const App = () => {
   return (
     <div>
       <Toaster
-        position="top-right"
+        position='top-right'
         reverseOrder={false}
       />
-      <h1 className='text-center text-danger m-3' style={{textDecoration: 'underline'}}>Point of Sale App</h1>
+      <h1 
+        className='text-center text-danger m-3' 
+        style={{
+          textDecoration: 'underline'
+          }}>
+            Point of Sale App
+      </h1>
       <ProductList />
       <ProductForm />
     </div>
