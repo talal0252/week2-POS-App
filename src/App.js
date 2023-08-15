@@ -7,16 +7,14 @@ import { Toaster } from 'react-hot-toast';
 const App = () => {
   return (
     <div>
-      <Toaster
-        position='top-right'
-        reverseOrder={false}
-      />
-      <h1 
-        className='text-center text-danger m-3' 
+      <Toaster position="top-right" reverseOrder={false} />
+      <h1
+        className="text-center text-danger m-3"
         style={{
-          textDecoration: 'underline'
-          }}>
-            Point of Sale App
+          textDecoration: 'underline',
+        }}
+      >
+        Point of Sale App
       </h1>
       <ProductList />
       <ProductForm />

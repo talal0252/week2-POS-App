@@ -19,13 +19,15 @@ const ProductForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    e.target.classList.contains('is-invalid') && e.target.classList.remove('is-invalid');
-    e.target.classList.contains('is-valid') && e.target.classList.remove('is-valid');
-    if(name === "price" && value <= 0) {
+    e.target.classList.contains('is-invalid') &&
+      e.target.classList.remove('is-invalid');
+    e.target.classList.contains('is-valid') &&
+      e.target.classList.remove('is-valid');
+    if (name === 'price' && value <= 0) {
       e.target.classList.add('is-invalid');
       toast.error('Price must be greater than 0.');
       return;
-    } else if(value === "") {
+    } else if (value === '') {
       e.target.classList.add('is-invalid');
       toast.error('Please fill in all fields.');
       return;
@@ -35,9 +37,11 @@ const ProductForm = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];    
-    e.target.classList.contains('is-invalid') && e.target.classList.remove('is-invalid');
-    e.target.classList.contains('is-valid') && e.target.classList.remove('is-valid');
+    const file = e.target.files[0];
+    e.target.classList.contains('is-invalid') &&
+      e.target.classList.remove('is-invalid');
+    e.target.classList.contains('is-valid') &&
+      e.target.classList.remove('is-valid');
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (inner_e) => {
@@ -45,19 +49,23 @@ const ProductForm = () => {
       img.src = inner_e.target.result;
       img.onload = () => {
         if (img.width > 200 || img.height > 200) {
-          toast.error('Image must be 200px x 200px or smaller.');          
+          toast.error('Image must be 200px x 200px or smaller.');
           e.target.classList.add('is-invalid');
           return;
         }
-      }
-    }
+      };
+    };
     e.target.classList.add('is-valid');
     setFormData({ ...formData, image: URL.createObjectURL(file) });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.title.trim() === '' || formData.description.trim() === '' || !formData.image) {
+    if (
+      formData.title.trim() === '' ||
+      formData.description.trim() === '' ||
+      !formData.image
+    ) {
       toast.error('Please fill in all fields.');
       return;
     }
@@ -69,7 +77,7 @@ const ProductForm = () => {
         title: '',
         price: '',
         image: null,
-        description: ''
+        description: '',
       });
       setFetched(false);
     } else {
@@ -95,39 +103,76 @@ const ProductForm = () => {
       title: '',
       price: '',
       image: null,
-      description: ''
+      description: '',
     });
   };
 
   return (
     <div>
-      <div className='text-center'>
-        <button className='btn-primary btn m-5' onClick={(e) => setShowAddForm(!showAddForm)}>Add Product</button>
-        <button className='btn-primary btn m-5' onClick={(e) => setShowEditForm(!showEditForm)}>Edit Product</button>
+      <div className="text-center">
+        <button
+          className="btn-primary btn m-5"
+          onClick={(e) => setShowAddForm(!showAddForm)}
+        >
+          Add Product
+        </button>
+        <button
+          className="btn-primary btn m-5"
+          onClick={(e) => setShowEditForm(!showEditForm)}
+        >
+          Edit Product
+        </button>
       </div>
-      {showAddForm &&       <div className='row justify-content-center'>
-        <Form handleSubmit={handleSubmit} handleChange={handleChange} handleImageChange={handleImageChange} formData={formData} />
-      </div>}
-      {showEditForm && 
+      {showAddForm && (
+        <div className="row justify-content-center">
+          <Form
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            handleImageChange={handleImageChange}
+            formData={formData}
+          />
+        </div>
+      )}
+      {showEditForm && (
         <div>
-            <div className='text-center'>
-              <input name="fetch" id="fetch" className='text-center p-1' type="text" placeholder="Enter ID" />
-              <button className='btn btn-success ml-4' onClick={(e) => {
-                  let product = products.filter((product) => String(product.id) === String(document.getElementById('fetch').value))[0];
-                  if (product === undefined) {
-                    toast.error('Product not found.');
-                  } else {
-                    setFetched(true);
-                    setFormData(product);
-                  }
-              }}>Fetch</button>
+          <div className="text-center">
+            <input
+              name="fetch"
+              id="fetch"
+              className="text-center p-1"
+              type="text"
+              placeholder="Enter ID"
+            />
+            <button
+              className="btn btn-success ml-4"
+              onClick={(e) => {
+                let product = products.filter(
+                  (product) =>
+                    String(product.id) ===
+                    String(document.getElementById('fetch').value)
+                )[0];
+                if (product === undefined) {
+                  toast.error('Product not found.');
+                } else {
+                  setFetched(true);
+                  setFormData(product);
+                }
+              }}
+            >
+              Fetch
+            </button>
+          </div>
+          {fetched && (
+            <div className="row justify-content-center mt-4">
+              <Form
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                formData={formData}
+              />
             </div>
-            {
-              fetched && <div className='row justify-content-center mt-4'>
-                <Form handleSubmit={handleSubmit} handleChange={handleChange} formData={formData} />
-              </div>
-            }
-        </div>}
+          )}
+        </div>
+      )}
     </div>
   );
 };
