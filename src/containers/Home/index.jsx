@@ -1,7 +1,7 @@
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import ProductList from '../components/ProductList';
-import ProductForm from '../components/ProductForm';
+import ProductList from './components/ProductList';
+import ProductForm from './components/ProductForm';
 
 const Home = () => {
   return (
