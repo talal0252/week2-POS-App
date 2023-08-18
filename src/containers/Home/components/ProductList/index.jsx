@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useProductContext } from '../../../../contexts/ProductContext';
+import { useProductContext } from 'contexts/ProductContext';
 import './ProductList.css';
 
 const ProductList = () => {
