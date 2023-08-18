@@ -35,7 +35,7 @@ const Form = ({ handleSubmit, handleChange, handleImageChange, formData }) => {
         </div>
         <div className="form-group">
           <label for="image">Image</label>
-          {handleImageChange !== undefined ? (
+          {handleImageChange ? (
             <input
               accept="image/*"
               className="form-control"

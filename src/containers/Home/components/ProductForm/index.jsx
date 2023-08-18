@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useProductContext } from 'contexts/ProductContext';
 import Form from '../MainForm';
+import { addProduct, updateProduct } from 'actions';
 
 const ProductForm = () => {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -75,8 +76,8 @@ const ProductForm = () => {
       return;
     }
 
-    if (formData.id !== undefined) {
-      dispatch({ type: 'UPDATE_PRODUCT', payload: formData });
+    if (formData.id) {
+      dispatch(updateProduct(formData));
       toast.success('Product updated successfully!');      
       setFetched(false);
       resetFormData();
@@ -95,8 +96,7 @@ const ProductForm = () => {
         document.getElementsByName(fieldName)[0].classList.remove('is-valid');
       });
       document.getElementsByName('image')[0].value = null;
-
-      dispatch({ type: 'ADD_PRODUCT', payload: newProduct });
+      dispatch(addProduct(newProduct));
     }
     resetFormData();
   };

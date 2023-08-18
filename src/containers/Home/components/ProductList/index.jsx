@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useProductContext } from 'contexts/ProductContext';
+import { deleteProduct } from 'actions';
 import './ProductList.css';
 
 const ProductList = () => {
@@ -8,7 +9,7 @@ const ProductList = () => {
   const { products } = state;
 
   const handleDelete = (productId) => {
-    dispatch({ type: 'DELETE_PRODUCT', payload: productId });
+    dispatch(deleteProduct(productId));
   };
 
   const handleSearch = (e) => {

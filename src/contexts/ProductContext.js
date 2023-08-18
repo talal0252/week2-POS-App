@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, SET_PRODUCTS, setProducts } from 'actions';
 
 const ProductContext = createContext();
 
@@ -9,26 +10,26 @@ const initialState = {
 
 const productReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_PRODUCT':
+    case ADD_PRODUCT:
       return {
         ...state,
         products: [...state.products, action.payload],
       };
-    case 'UPDATE_PRODUCT':
+    case UPDATE_PRODUCT:
       return {
         ...state,
         products: state.products.map((product) =>
           product.id === action.payload.id ? action.payload : product
         ),
       };
-    case 'DELETE_PRODUCT':
+    case DELETE_PRODUCT:
       return {
         ...state,
         products: state.products.filter(
           (product) => product.id !== action.payload
         ),
       };
-    case 'SET_PRODUCTS':
+    case SET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
@@ -46,7 +47,7 @@ const ProductProvider = ({ children }) => {
       try {
         const response = await axios.get('https://fakestoreapi.com/products');
         const products = response.data;
-        dispatch({ type: 'SET_PRODUCTS', payload: products });
+        dispatch(setProducts(products));
       } catch (error) {
         console.error('Error fetching products:', error);
       }
