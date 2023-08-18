@@ -1,10 +1,9 @@
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import { ProductProvider } from '../../contexts/ProductContext';
 import ProductList from '../components/ProductList';
 import ProductForm from '../components/ProductForm';
 
-const App = () => {
+const Home = () => {
   return (
     <div>
       <Toaster position="top-right" reverseOrder={false} />
@@ -22,10 +21,4 @@ const App = () => {
   );
 };
 
-const AppWithProvider = () => (
-  <ProductProvider>
-    <App />
-  </ProductProvider>
-);
-
-export default AppWithProvider;
+export default Home;
