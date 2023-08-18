@@ -1,8 +1,8 @@
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import { ProductProvider } from './contexts/ProductContext';
-import ProductList from './components/ProductList';
-import ProductForm from './components/ProductForm';
+import { ProductProvider } from '../../contexts/ProductContext';
+import ProductList from '../ProductList';
+import ProductForm from '../ProductForm';
 
 const App = () => {
   return (
