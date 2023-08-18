@@ -1,7 +1,6 @@
-// src/components/ProductForm.js
 import React, { useState } from 'react';
-import { useProductContext } from '../contexts/ProductContext';
 import { toast } from 'react-hot-toast';
+import { useProductContext } from '../contexts/ProductContext';
 import Form from './MainForm';
 
 const ProductForm = () => {
@@ -44,9 +43,9 @@ const ProductForm = () => {
       e.target.classList.remove('is-valid');
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = (inner_e) => {
+    reader.onload = (innerEvent) => {
       const img = new Image();
-      img.src = inner_e.target.result;
+      img.src = innerEvent.target.result;
       img.onload = () => {
         if (img.width > 200 || img.height > 200) {
           toast.error('Image must be 200px x 200px or smaller.');
@@ -147,10 +146,9 @@ const ProductForm = () => {
               className="btn btn-success ml-4"
               onClick={(e) => {
                 let product = products.filter(
-                  (product) =>
-                    String(product.id) ===
-                    String(document.getElementById('fetch').value)
-                )[0];
+                  (product) => 
+                    String(product.id) === String(document.getElementById('fetch').value)
+                  )[0];
                 if (product === undefined) {
                   toast.error('Product not found.');
                 } else {
