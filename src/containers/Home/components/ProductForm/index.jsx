@@ -133,18 +133,32 @@ const ProductForm = () => {
     />
   );
 
+  const handleAddProductButton = () => {
+    setShowAddForm(!showAddForm);
+    setShowEditForm(false);
+    setFetched(false);
+    resetFormData();
+  }
+
+  const handleEditProductButton = () => {
+    setShowEditForm(!showEditForm);
+    setShowAddForm(false);
+    setFetched(false);
+    resetFormData();
+  }
+
   return (
     <div>
       <div className="text-center">
         <button
           className="btn-primary btn m-5"
-          onClick={() => setShowAddForm(!showAddForm)}
+          onClick={handleAddProductButton}
         >
           Add Product
         </button>
         <button
           className="btn-primary btn m-5"
-          onClick={() => setShowEditForm(!showEditForm)}
+          onClick={handleEditProductButton}
         >
           Edit Product
         </button>

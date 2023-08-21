@@ -61,4 +61,3 @@ const Form = ({ handleSubmit, handleChange, handleImageChange, formData }) => {
   };
   
   export default Form;
-  
