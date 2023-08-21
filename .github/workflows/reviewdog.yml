@@ -1,0 +1,26 @@
+name: reviewdog
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: ESLint - ReviewDog
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: development
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - run: npm install
+
+      - uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-check
+          eslint_flags: "--ext js,jsx src"
