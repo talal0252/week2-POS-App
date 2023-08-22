@@ -3,7 +3,7 @@ import { useProductContext } from 'contexts/ProductContext';
 import { deleteProduct } from 'actions';
 import './ProductList.css';
 
-const ProductList = () => {
+function ProductList() {
   const { state, dispatch } = useProductContext();
   const [query, setQuery] = useState('');
   const { products } = state;
@@ -16,9 +16,9 @@ const ProductList = () => {
     setQuery(e.target.value);
   };
 
-  const filteredProducts = products.filter((product) => {
-    return product.title.toLowerCase().includes(query.toLowerCase());
-  });
+  const filteredProducts = products.filter(
+    (product) => product.title.toLowerCase().includes(query.toLowerCase()),
+  );
 
   return (
     <div>
@@ -43,23 +43,31 @@ const ProductList = () => {
                 <div className="card-header text-center">
                   {product.title.length <= 37
                     ? product.title
-                    : product.title.substring(0, 34) + '...'}
+                    : `${product.title.substring(0, 34)}...`}
                 </div>
-                <div className="card-header text-center">ID({product.id})</div>
+                <div className="card-header text-center">
+                  ID(
+                  {product.id}
+                  )
+                </div>
                 <img
                   src={product.image}
                   alt={product.title}
                   className="p-3 card-img-top"
                 />
                 <div className="card-body text-center">
-                  <p className="card-text">${product.price}</p>
+                  <p className="card-text">
+                    $
+                    {product.price}
+                  </p>
                   <p className="card-text">
                     {product.description.length <= 100
                       ? product.description
-                      : product.description.substring(0, 100) + '...'}
+                      : `${product.description.substring(0, 100)}...`}
                   </p>
                   <button
                     className="btn btn-warning"
+                    type="button"
                     onClick={() => handleDelete(product.id)}
                   >
                     Delete
@@ -72,6 +80,6 @@ const ProductList = () => {
       )}
     </div>
   );
-};
+}
 
 export default ProductList;

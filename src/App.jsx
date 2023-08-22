@@ -1,11 +1,13 @@
-import React from "react";
-import Home from "./containers/Home";
-import { ProductProvider } from "./contexts/ProductContext";
+import React from 'react';
+import Home from './containers/Home';
+import { ProductProvider } from './contexts/ProductContext';
 
-const App = () => (
+function App() {
+  return (
     <ProductProvider>
-        <Home />
+      <Home />
     </ProductProvider>
-);
+  );
+}
 
 export default App;

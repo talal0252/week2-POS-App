@@ -3,7 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 
-const Home = () => {
+function Home() {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
@@ -19,6 +19,6 @@ const Home = () => {
       <ProductForm />
     </>
   );
-};
+}
 
 export default Home;

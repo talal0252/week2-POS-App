@@ -1,6 +1,11 @@
-import React, { createContext, useReducer, useContext, useEffect } from 'react';
+import React, {
+  createContext, useReducer, useContext, useEffect, useMemo,
+} from 'react';
 import axios from 'axios';
-import { ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, SET_PRODUCTS, setProducts } from 'actions';
+import {
+  ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, SET_PRODUCTS, setProducts,
+} from 'actions';
+import PropTypes from 'prop-types';
 
 const ProductContext = createContext();
 
@@ -18,15 +23,14 @@ const productReducer = (state, action) => {
     case UPDATE_PRODUCT:
       return {
         ...state,
-        products: state.products.map((product) =>
-          product.id === action.payload.id ? action.payload : product
-        ),
+        products: state.products.map((product) => (product.id
+          === action.payload.id ? action.payload : product)),
       };
     case DELETE_PRODUCT:
       return {
         ...state,
         products: state.products.filter(
-          (product) => product.id !== action.payload
+          (product) => product.id !== action.payload,
         ),
       };
     case SET_PRODUCTS:
@@ -39,8 +43,9 @@ const productReducer = (state, action) => {
   }
 };
 
-const ProductProvider = ({ children }) => {
+function ProductProvider({ children }) {
   const [state, dispatch] = useReducer(productReducer, initialState);
+  const providedValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -49,7 +54,7 @@ const ProductProvider = ({ children }) => {
         const products = response.data;
         dispatch(setProducts(products));
       } catch (error) {
-        console.error('Error fetching products:', error);
+        throw new Error(error);
       }
     };
 
@@ -57,10 +62,14 @@ const ProductProvider = ({ children }) => {
   }, []);
 
   return (
-    <ProductContext.Provider value={{ state, dispatch }}>
+    <ProductContext.Provider value={providedValue}>
       {children}
     </ProductContext.Provider>
   );
+}
+
+ProductProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 const useProductContext = () => useContext(ProductContext);

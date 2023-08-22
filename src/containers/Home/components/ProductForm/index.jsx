@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useProductContext } from 'contexts/ProductContext';
-import Form from '../MainForm';
 import { addProduct, updateProduct } from 'actions';
+import Form from '../MainForm';
 
-const ProductForm = () => {
+function ProductForm() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [fetched, setFetched] = useState(false);
@@ -14,7 +14,7 @@ const ProductForm = () => {
     title: '',
     price: '',
     description: '',
-    image: null,
+    image: '',
   });
 
   const handleChange = ({ target }) => {
@@ -26,17 +26,26 @@ const ProductForm = () => {
       target.classList.toggle('is-invalid', true);
       toast.error('Price must be greater than 0.');
       return;
-    } else if (value === '') {
+    } if (value === '') {
       target.classList.toggle('is-invalid', true);
       toast.error('Please fill in all fields.');
       return;
     }
 
     target.classList.toggle('is-valid', true);
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
+  };
+
+  const resetFormData = () => {
+    setFormData({
+      title: '',
+      price: '',
+      image: null,
+      description: '',
+    });
   };
 
   const handleImageChange = ({ target }) => {
@@ -53,13 +62,12 @@ const ProductForm = () => {
         if (img.width > 200 || img.height > 200) {
           toast.error('Image must be 200px x 200px or smaller.');
           target.classList.toggle('is-invalid', true);
-          return;
         }
       };
     };
 
     target.classList.toggle('is-valid', true);
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       image: URL.createObjectURL(file),
     }));
@@ -68,9 +76,9 @@ const ProductForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      formData.title.trim() === '' ||
-      formData.description.trim() === '' ||
-      !formData.image
+      formData.title.trim() === ''
+      || formData.description.trim() === ''
+      || !formData.image
     ) {
       toast.error('Please fill in all fields.');
       return;
@@ -78,7 +86,7 @@ const ProductForm = () => {
 
     if (formData.id) {
       dispatch(updateProduct(formData));
-      toast.success('Product updated successfully!');      
+      toast.success('Product updated successfully!');
       setFetched(false);
       resetFormData();
     } else {
@@ -92,7 +100,7 @@ const ProductForm = () => {
 
       toast.success('Product added successfully!');
 
-      ['title', 'price', 'desc', 'image'].forEach(fieldName => {
+      ['title', 'price', 'desc', 'image'].forEach((fieldName) => {
         document.getElementsByName(fieldName)[0].classList.remove('is-valid');
       });
       document.getElementsByName('image')[0].value = null;
@@ -101,19 +109,9 @@ const ProductForm = () => {
     resetFormData();
   };
 
-  const resetFormData = () => {
-    setFormData({
-      title: '',
-      price: '',
-      image: null,
-      description: '',
-    });
-  }
-
   const handleFetch = () => {
     const product = products.find(
-      product => 
-      String(product.id) === String(document.getElementById('fetch').value)
+      (_product) => String(_product.id) === String(document.getElementById('fetch').value),
     );
 
     if (!product) {
@@ -138,26 +136,28 @@ const ProductForm = () => {
     setShowEditForm(false);
     setFetched(false);
     resetFormData();
-  }
+  };
 
   const handleEditProductButton = () => {
     setShowEditForm(!showEditForm);
     setShowAddForm(false);
     setFetched(false);
     resetFormData();
-  }
+  };
 
   return (
     <div>
       <div className="text-center">
         <button
           className="btn-primary btn m-5"
+          type="button"
           onClick={handleAddProductButton}
         >
           Add Product
         </button>
         <button
           className="btn-primary btn m-5"
+          type="button"
           onClick={handleEditProductButton}
         >
           Edit Product
@@ -180,6 +180,7 @@ const ProductForm = () => {
             />
             <button
               className="btn btn-success ml-4"
+              type="button"
               onClick={handleFetch}
             >
               Fetch
@@ -194,6 +195,6 @@ const ProductForm = () => {
       )}
     </div>
   );
-};
+}
 
 export default ProductForm;

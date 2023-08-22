@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: [
     'react',
-    'jam3',
+    'jam3'
   ],
   rules: {
     'react/require-default-props': 1,

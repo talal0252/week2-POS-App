@@ -1,30 +1,40 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Form = ({ handleSubmit, handleChange, handleImageChange, formData }) => {
-    return (
-      <form onSubmit={handleSubmit} className="text-center">
-        <div className="form-group">
-          <label for="title">Title</label>
+function Form({
+  handleSubmit, handleChange, handleImageChange, formData,
+}) {
+  return (
+    <form onSubmit={handleSubmit} className="text-center">
+      <div className="form-group">
+        <label htmlFor="title">
+          Title
           <input
             className="form-control"
             type="text"
             name="title"
+            id="title"
             value={formData.title}
             onChange={handleChange}
           />
-        </div>
-        <div className="form-group">
-          <label for="price">Price</label>
+        </label>
+      </div>
+      <div className="form-group">
+        <label htmlFor="price">
+          Price
           <input
             className="form-control"
             type="number"
             name="price"
+            id="price"
             value={formData.price}
             onChange={handleChange}
           />
-        </div>
-        <div className="form-group">
-          <label for="description">Description</label>
+        </label>
+      </div>
+      <div className="form-group">
+        <label htmlFor="desc">
+          Description
           <textarea
             className="form-control"
             id="desc"
@@ -32,15 +42,18 @@ const Form = ({ handleSubmit, handleChange, handleImageChange, formData }) => {
             value={formData.description}
             onChange={handleChange}
           />
-        </div>
-        <div className="form-group">
-          <label for="image">Image</label>
+        </label>
+      </div>
+      <div className="form-group">
+        <label htmlFor="image">
+          Image
           {handleImageChange ? (
             <input
               accept="image/*"
               className="form-control"
               type="file"
               name="image"
+              id="image"
               onChange={handleImageChange}
             />
           ) : (
@@ -48,16 +61,32 @@ const Form = ({ handleSubmit, handleChange, handleImageChange, formData }) => {
               className="form-control"
               type="text"
               name="image"
+              id="image"
               value={formData.image}
               onChange={handleChange}
             />
           )}
-        </div>
-        <button type="submit" className="btn btn-success">
-          Submit
-        </button>
-      </form>
-    );
-  };
-  
-  export default Form;
+        </label>
+      </div>
+      <button type="submit" className="btn btn-success">
+        Submit
+      </button>
+    </form>
+  );
+}
+
+Form.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleImageChange: PropTypes.func.isRequired,
+  // formData: PropTypes.object.isRequired,
+  // Prop type object is forbiddenn
+  formData: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default Form;
